@@ -5,6 +5,12 @@ import './Header.css';
 
 
 const Header = () => {
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const onSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+    };
+
     return (
         <header>
             <div className="logo">
@@ -14,7 +20,9 @@ const Header = () => {
             <form className="search">
                 <input
                     type="text"
+                    value={searchTerm}
                     placeholder="Search"
+                    onChange={onSearchChange}
                     aria-label="Search"
                 />
             <button type="submit" aria-label="Search">
