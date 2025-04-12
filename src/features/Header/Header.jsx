@@ -2,14 +2,28 @@ import react, { useState, useEffect } from "react";
 import { SiReddit } from "react-icons/si";
 import { HiOutlineSearchCircle } from "react-icons/hi";
 import './Header.css';
+import { setSearchTerm} from "../Subreddits/redditSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 
 const Header = () => {
-    const [searchTerm, setSearchTerm] = useState("");
+    const [searchTermLocal, setSearchTermLocal] = useState("");
+    const searchTerm = useSelector((state) => state.reddit.searchTerm);
+    const dispatch = useDispatch();
 
     const onSearchChange = (e) => {
-        setSearchTerm(e.target.value);
+        setSearchTermLocal(e.target.value);
     };
+
+    useEffect(() => {
+
+        setSearchTermLocal(searchTerm);
+    }, [searchTerm]);
+
+    const onSearchSubmit = (e) => {
+        e.preventDefault();
+        dispatch(setSearchTermLocal(searchTermLocal));
+    }
 
     return (
         <header>
@@ -17,10 +31,10 @@ const Header = () => {
                 <SiReddit className="logo-icon"/>
                 <p>Meddit</p>
             </div>
-            <form className="search">
+            <form className="search" onSubmit={onSearchSubmit}>
                 <input
                     type="text"
-                    value={searchTerm}
+                    value={searchTermLocal}
                     placeholder="Search"
                     onChange={onSearchChange}
                     aria-label="Search"
