@@ -2,28 +2,27 @@ import react, { useState, useEffect } from "react";
 import { SiReddit } from "react-icons/si";
 import { HiOutlineSearchCircle } from "react-icons/hi";
 import './Header.css';
-import { setSearchTerm} from "../Subreddits/redditSlice";
+import { setSearchTerm} from "../../store/redditSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 
 const Header = () => {
-    const [searchTermLocal, setSearchTermLocal] = useState("");
-    const searchTerm = useSelector((state) => state.reddit.searchTerm);
-    const dispatch = useDispatch();
+    const [searchTermLocal, setSearchTermLocal] = useState('');
+  const searchTerm = useSelector((state) => state.reddit.searchTerm);
+  const dispatch = useDispatch();
 
-    const onSearchChange = (e) => {
-        setSearchTermLocal(e.target.value);
-    };
+  const onSearchTermChange = (e) => {
+    setSearchTermLocal(e.target.value);
+  };
 
-    useEffect(() => {
+  useEffect(() => {
+    setSearchTermLocal(searchTerm);
+  }, [searchTerm]);
 
-        setSearchTermLocal(searchTerm);
-    }, [searchTerm]);
-
-    const onSearchSubmit = (e) => {
-        e.preventDefault();
-        dispatch(setSearchTermLocal(searchTermLocal));
-    }
+  const onSearchTermSubmit = (e) => {
+    e.preventDefault();
+    dispatch(setSearchTerm(searchTermLocal));
+  };
 
     return (
         <header>
@@ -31,15 +30,15 @@ const Header = () => {
                 <SiReddit className="logo-icon"/>
                 <p>Meddit</p>
             </div>
-            <form className="search" onSubmit={onSearchSubmit}>
+            <form className="search" onSubmit={onSearchTermSubmit}>
                 <input
                     type="text"
                     value={searchTermLocal}
                     placeholder="Search"
-                    onChange={onSearchChange}
+                    onChange={onSearchTermChange}
                     aria-label="Search"
                 />
-            <button type="submit" aria-label="Search">
+            <button type="submit" onClick={onSearchTermSubmit} aria-label="Search">
                 <HiOutlineSearchCircle />
             </button>
 
