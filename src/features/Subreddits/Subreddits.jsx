@@ -34,8 +34,7 @@ const Subreddits = () => {
             >
               <img
                 src={
-                  subreddit.icon_img ||
-                  `https://api.adorable.io/avatars/25/${subreddit.display_name}`
+                  subreddit.icon_img?.trim() || subreddit.community_icon?.split('?')[0]?.trim() || `https://api.dicebear.com/7.x/shapes/svg?seed=${subreddit.display_name}`
                 }
                 alt={`${subreddit.display_name}`}
                 className="subreddit-icon"

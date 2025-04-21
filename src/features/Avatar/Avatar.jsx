@@ -6,7 +6,7 @@ const Avatar = (props) => {
 
   return (
     <img
-      src={`https://api.adorable.io/avatars/10/${name}`}
+      src={`https://api.dicebear.com/7.x/identicon/svg?seed=${name}`}
       alt={`${name} profile`}
       className="avatar-profile-image"
     />
